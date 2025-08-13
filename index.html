@@ -100,7 +100,7 @@
         </div>
         
         <div class="analytics-section">
-            <h2>კსტომ ივენთები</h2>
+            <h2>კასტომ ივენთები</h2>
             <button class="button" onclick="trackCustomEvent()">
                 Random Event
             </button>
@@ -120,23 +120,22 @@
     </div>
 
     <script>
-        // PostHog-ის ინიციალიზაცია (შეიცვლება მოგვიანებით)
+        // PostHog ინიციალიზაცია
         function initPostHog() {
-            // PostHog კოდი აქ დაემატება
             console.log('PostHog initialized');
         }
         
-        // ივენთების ტრეკინგი
+        // ივენთების ტრეკინგი - კომენტარები ამოშალული!
         function trackEvent(eventName, eventType) {
             console.log(`Event tracked: ${eventName} - ${eventType}`);
-            // posthog.capture(eventName, { type: eventType });
+            posthog.capture(eventName, { type: eventType });
             alert(`ივენთი გაიგზავნა: ${eventName}`);
         }
         
         function trackFormSubmit(event) {
             event.preventDefault();
             console.log('Form submitted');
-            // posthog.capture('form_submit');
+            posthog.capture('form_submit');
             alert('ფორმა წარმატებით გაიგზავნა!');
         }
         
@@ -144,26 +143,26 @@
             const events = ['video_watched', 'article_read', 'product_viewed', 'search_performed'];
             const randomEvent = events[Math.floor(Math.random() * events.length)];
             console.log(`Custom event: ${randomEvent}`);
-            // posthog.capture(randomEvent);
+            posthog.capture(randomEvent);
             alert(`კასტომ ივენთი: ${randomEvent}`);
         }
         
         function identifyUser() {
             const userId = 'user_' + Math.random().toString(36).substr(2, 9);
             console.log(`User identified: ${userId}`);
-            // posthog.identify(userId);
+            posthog.identify(userId);
             alert(`იუზერი იდენტიფიცირებულია: ${userId}`);
         }
         
         function setUserProperty() {
             console.log('User property set');
-            // posthog.people.set({ plan: 'premium' });
+            posthog.setPersonProperties({ plan: 'premium' });
             alert('იუზერის თვისება დაყენებულია!');
         }
         
         function trackPageView(section) {
             console.log(`Page view: ${section}`);
-            // posthog.capture('$pageview', { section: section });
+            posthog.capture('$pageview', { section: section });
         }
         
         // დატვირთვისას
