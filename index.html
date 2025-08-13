@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PostHog ტესტი</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .button:hover {
+            background: #ee5a5a;
+            transform: translateY(-2px);
+        }
+        
+        .analytics-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        input, select {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PostHog ანალიტიკის ტესტი 🚀</h1>
+        <p>ეს ვებსაიტი შეიქმნა PostHog ანალიტიკის ფუნქციონალების ტესტირებისთვის</p>
+        
+        <div class="analytics-section">
+            <h2>ივენთების ტესტირება</h2>
+            <button class="button" onclick="trackEvent('button_click', 'primary_cta')">
+                Primary CTA Click
+            </button>
+            <button class="button" onclick="trackEvent('button_click', 'secondary_cta')">
+                Secondary CTA Click
+            </button>
+            <button class="button" onclick="trackEvent('download', 'file')">
+                Download File
+            </button>
+        </div>
+        
+        <div class="analytics-section">
+            <h2>ფორმის ტესტირება</h2>
+            <form onsubmit="trackFormSubmit(event)">
+                <input type="text" placeholder="სახელი" required>
+                <input type="email" placeholder="ელ. ფოსტა" required>
+                <select>
+                    <option>სტუდენტი</option>
+                    <option>დეველოპერი</option>
+                    <option>მარკეტერი</option>
+                    <option>სხვა</option>
+                </select>
+                <button type="submit" class="button">გაგზავნა</button>
+            </form>
+        </div>
+        
+        <div class="analytics-section">
+            <h2>კსტომ ივენთები</h2>
+            <button class="button" onclick="trackCustomEvent()">
+                Random Event
+            </button>
+            <button class="button" onclick="identifyUser()">
+                Identify User
+            </button>
+            <button class="button" onclick="setUserProperty()">
+                Set User Property
+            </button>
+        </div>
+        
+        <div class="analytics-section">
+            <h2>Page Views</h2>
+            <a href="#section1" onclick="trackPageView('section1')">გადასვლა Section 1-ზე</a> |
+            <a href="#section2" onclick="trackPageView('section2')">გადასვლა Section 2-ზე</a>
+        </div>
+    </div>
+
+    <script>
+        // PostHog-ის ინიციალიზაცია (შეიცვლება მოგვიანებით)
+        function initPostHog() {
+            // PostHog კოდი აქ დაემატება
+            console.log('PostHog initialized');
+        }
+        
+        // ივენთების ტრეკინგი
+        function trackEvent(eventName, eventType) {
+            console.log(`Event tracked: ${eventName} - ${eventType}`);
+            // posthog.capture(eventName, { type: eventType });
+            alert(`ივენთი გაიგზავნა: ${eventName}`);
+        }
+        
+        function trackFormSubmit(event) {
+            event.preventDefault();
+            console.log('Form submitted');
+            // posthog.capture('form_submit');
+            alert('ფორმა წარმატებით გაიგზავნა!');
+        }
+        
+        function trackCustomEvent() {
+            const events = ['video_watched', 'article_read', 'product_viewed', 'search_performed'];
+            const randomEvent = events[Math.floor(Math.random() * events.length)];
+            console.log(`Custom event: ${randomEvent}`);
+            // posthog.capture(randomEvent);
+            alert(`კასტომ ივენთი: ${randomEvent}`);
+        }
+        
+        function identifyUser() {
+            const userId = 'user_' + Math.random().toString(36).substr(2, 9);
+            console.log(`User identified: ${userId}`);
+            // posthog.identify(userId);
+            alert(`იუზერი იდენტიფიცირებულია: ${userId}`);
+        }
+        
+        function setUserProperty() {
+            console.log('User property set');
+            // posthog.people.set({ plan: 'premium' });
+            alert('იუზერის თვისება დაყენებულია!');
+        }
+        
+        function trackPageView(section) {
+            console.log(`Page view: ${section}`);
+            // posthog.capture('$pageview', { section: section });
+        }
+        
+        // დატვირთვისას
+        window.addEventListener('load', function() {
+            initPostHog();
+            console.log('Website loaded');
+        });
+    </script>
+</body>
+</html>
